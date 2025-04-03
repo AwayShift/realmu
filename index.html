@@ -54,6 +54,7 @@
     
     <h2>Selecione um horário:</h2>
     <input type="time" id="timeInput" onchange="updateHighlight()">
+    <button onclick="resetClock()">Resetar Relógio</button>
     
     <table id="eventTable">
         <tr>
@@ -278,7 +279,7 @@
 [5] Ability Crystal [B] (100%)<br>
 [1] Talisman of Chaos Assembly (100%)<br>
 [1] Elemental Talisman of Chaos (100%)</td>
-            <td class="bold">Sexta - 15:15<br>
+            <td class="bold">Sexta  15:15<br>
 Sexta  21:15<br>
 Sábado  03:15<br>
 Sábado  09:15<br>
@@ -317,8 +318,12 @@ Segunda  00:15</td>
             <td>x15 Soldiers, x1 White Wizard / channel Lorencia, Noria, Devias Mapa</td>
         </tr>		
     </table>
-    <script>
+   <script>
+        let manualInput = false;
+
         function updateClock() {
+            if (manualInput) return;
+            
             const now = new Date();
             const options = { timeZone: "America/Sao_Paulo", hour12: false, hour: "2-digit", minute: "2-digit", weekday: "long" };
             const formatter = new Intl.DateTimeFormat("pt-BR", options);
@@ -336,11 +341,11 @@ Segunda  00:15</td>
             
             let referenceTime = clockTime.split(' ')[1];
             let referenceDay = clockTime.split(' ')[0];
-            const manualInput = inputTime !== "";
+            manualInput = inputTime !== "";
 
             if (manualInput) {
                 referenceTime = inputTime;
-                referenceDay = null;
+                referenceDay = null; // Ignora o dia da semana ao buscar manualmente
             }
             
             const [inputHours, inputMinutes] = referenceTime.split(':').map(Number);
@@ -353,13 +358,13 @@ Segunda  00:15</td>
             document.querySelectorAll('#eventTable tr').forEach(row => {
                 const timeCells = row.querySelectorAll('td.bold');
                 timeCells.forEach(cell => {
-                    const times = cell.innerText.split(/\n|, /);
+                    const times = cell.innerText.split(', ');
                     times.forEach(time => {
-                        let timeStr = time.trim();
+                        let timeStr = time;
                         let day = null;
 
-                        if (timeStr.includes(' ')) {
-                            const parts = timeStr.split(' ');
+                        if (time.includes(' ')) {
+                            const parts = time.split(' ');
                             day = parts[0];
                             timeStr = parts[1];
                         }
@@ -368,14 +373,21 @@ Segunda  00:15</td>
                         const eventTimeInMinutes = hours * 60 + minutes;
 
                         if (
-                            (!manualInput && day === referenceDay && eventTimeInMinutes >= inputTimeInMinutes && eventTimeInMinutes <= inputTimeInMinutes + 60) ||
-                            (manualInput && eventTimeInMinutes >= inputTimeInMinutes && eventTimeInMinutes <= inputTimeInMinutes + 60)
+                            eventTimeInMinutes >= inputTimeInMinutes - 30 && 
+                            eventTimeInMinutes <= inputTimeInMinutes + 30 && 
+                            (!manualInput || day === referenceDay)
                         ) {
                             row.classList.add('highlight');
                         }
                     });
                 });
             });
+        }
+
+        function resetClock() {
+            document.getElementById("timeInput").value = "";
+            manualInput = false;
+            updateClock();
         }
 
         setInterval(updateClock, 1000);
