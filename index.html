@@ -1,32 +1,54 @@
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventos do Jogo</title>
+    <title>Tabela de Eventos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: #ffffff;
+            background-color: #f4f4f4;
             text-align: center;
+            margin: 20px;
         }
         table {
             width: 80%;
-            margin: 20px auto;
+            margin: auto;
             border-collapse: collapse;
-            background-color: #2e2e2e;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
         th, td {
-            border: 1px solid #444;
-            padding: 10px;
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #444;
+            background-color: #333;
+            color: white;
+            text-transform: uppercase;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        td {
+            color: #555;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #80b3ff;
+            font-weight: bold;
+            color: #333;
+            border-left: 5px solid #0047b3;
         }
     </style>
 </head>
 <body>
-    <h1>Eventos do Jogo</h1>
     <table>
         <tr>
             <th>Evento</th>
@@ -35,29 +57,197 @@
             <th>Informação</th>
         </tr>
         <tr>
-            <td>Acheron Guardian</td>
+            <td class="bold">Acheron Guardian</td>
             <td>5 Mysterious Stone</td>
-            <td>01:00, 13:00, 18:00</td>
+            <td class="bold">01:00, 13:00, 18:00</td>
             <td>Join through Arka War NPC</td>
         </tr>
-        <tr>
-            <td>Tigers Invasion</td>
+        <tr class="highlight">
+            <td class="bold">Tigers Invasion </td>
             <td>180 ~ 200 Ruud, 1 Goblin Point</td>
-            <td>Every minute 00, Every minute 30</td>
+            <td class="bold">Every minute 00, Every minute 30</td>
             <td>x20 Tigers / channel, Random Map</td>
         </tr>
         <tr>
-            <td>Blue Dragon Invasion</td>
+            <td class="bold">Blue Dragon Invasion</td>
             <td>Mysterious Reward</td>
-            <td>Every 18h - Random Respawn</td>
+            <td class="bold">Every 18h - Random Respawn</td>
             <td>x1 Blue Dragon / channel, Random Map</td>
         </tr>
         <tr>
-            <td>Golden Dragon Invasion</td>
+            <td class="bold">Balrog Invasion</td>
+            <td>Main Reward:
+               [5] Goblin Points
+               [2] Jewel of Bless
+               [2] Jewel of Soul
+
+               Bonus Reward (10% chance):
+              [1] Mastery Box (Minor)
+              [2] Intermediate Spirit Stone</td>
+            <td class="bold">01:40, 13:40</td>
+            <td>x15 Balrog / channel LostTower</td>
+        </tr>
+		        <tr>
+            <td class="bold">Hydra Invasion</td>
+            <td>check	Main Reward:
+[5] Goblin Points
+[3] Lapidary Stone
+
+Bonus Reward (10% chance):
+[1] Mastery Box (Minor)
+[2] Lesser Spirit Stone</td>
+            <td class="bold">08:00, 20:00</td>
+            <td>x15 Hydra / channel Atlans</td>
+        </tr>
+		        <tr>
+            <td class="bold">Zaikan Invasion</td>
+            <td>Main Reward:
+[5] Goblin Points
+[2] Jewel of Bless
+[2] Jewel of Soul
+[2] Jewel of Life
+[2] Jewel of Creation
+[2] Jewel of Harmony
+
+Bonus Reward (10% chance):
+[1] Mastery Box (Minor)
+[2] Greater Spirit Stone</td>
+            <td class="bold">09:00, 21:00</td>
+            <td>x15 Zaikan / channel Tarkan</td>
+        </tr>
+		        <tr>
+            <td class="bold">Gorgon Invasion</td>
+            <td>check	Main Reward:
+[5] Goblin Points
+[3] Jewel of Bless
+
+Bonus Reward (10% chance):
+[1] Mastery Box (Minor)
+[1] Miracle Coin</td>
+            <td class="bold">04:00, 16:00</td>
+            <td>x15 Gorgon / channel Dungeon</td>
+        </tr>
+		        <tr>
+            <td class="bold">Ice Queen Invasion</td>
+            <td>Main Reward:
+[5] Goblin Points
+[3] Jewel of Soul
+
+Bonus Reward (10% chance):
+[1] Mastery Box (Minor)
+[1] Miracle Coin</td>
+            <td class="bold">05:50, 17:50</td>
+            <td>x15 Ice Queen / channel Devias</td>
+        </tr>
+		        <tr>
+            <td class="bold">Death King Invasion</td>
+            <td>Main Reward:
+[5] Goblin Points
+[2] Bless of Light (Greater) [Bound]
+
+Bonus Reward (10% chance):
+[10] Guardian Enhanced Stone
+[10] Elite Guardian Enhanced Stone</td>
+            <td class="bold">06:25, 18:25</td>
+            <td>x15 Death King / channel Lorencia</td>
+        </tr>
+		        <tr>
+            <td class="bold">Red Dragon Invasion</td>
+            <td>Main Reward:
+[5] Goblin Points
+[2] Jewel of Bless
+[2] Jewel of Soul
+
+Bonus Reward 1 (5% chance):
+[1] Talisman of Luck (10%)
+
+Bonus Reward 2 (5% chance):
+[1] Talisman of Chaos Assembly</td>
+            <td class="bold">07:15, 19:15</td>
+            <td>x15 Red Dragon / channel Lorencia, Noria</td>
+        </tr>
+		        <tr>
+            <td class="bold">Ubaid Elemental Invasion</td>
+            <td>Main Reward:
+[5] Goblin Points
+[1] Errtel R1 +3 ~ +5 (chance: 60%)
+[10] Elemental Rune (chance: 30%)
+[1] Elemental Talisman of Chaos (chance: 10%)</td>
+            <td class="bold">00:00, 12:00</td>
+            <td>x10 Elemental Elites / channel Acheron - Ubaid</td>
+        </tr>
+		        <tr>
+            <td class="bold">Debenter Elemental Invasion</td>
+            <td>Main Reward:
+[5] Goblin Points
+[1] Errtel R1 +3 ~ +5 (chance: 60%)
+[10] Elemental Rune (chance: 30%)
+[1] Elemental Talisman of Luck (chance: 10%)</td>
+            <td class="bold">00:00, 12:00</td>
+            <td>x5 Elemental Elites / channel Acheron - Debenter</td>
+        </tr>
+		        <tr>
+            <td class="bold">White Cherry Blossom Mix</td>
+            <td>Random Drop:
+[10] Jewel of Bless
+[10] Jewel of Soul
+[10] Lapidary Stone
+[5] Ability Crystal
+[1] Talisman of Chaos Assembly
+[1] Elemental Talisman of Chaos
+[1] 2nd Wing Relic
+[1] Seed Sphere (Step 3)
+[1] Elemental Talisman of Chaos (100%)</td>
+            <td class="bold">--</td>
+            <td>Requires x10 White Cherry Blossom Branch</td>
+        </tr>
+		        <tr>
+            <td class="bold">Red Cherry Blossom Mix</td>
+            <td>Random Drop:
+[30] Jewel of Creation
+[30] Jewel of Harmony
+[30] Lapidary Stone
+[30] Golden Sentence
+[10] Ability Crystal
+[1] Ring / Necklace PvP (2~3 Opt)
+[1] 3rd Wing Relic
+[1] Seed Sphere (Step 5)</td>
+            <td class="bold">--</td>
+            <td>Requires x50 Red Cherry Blossom Branch</td>
+        </tr>
+		        <tr>
+            <td class="bold">Golden Cherry Blossom Mix</td>
+            <td>Random Drop:
+[30] Ability Crystal
+[30] Uriel's Feather
+[15] Artifact Enchantment Stone
+[15] Ability Enhancement Stone
+[15] Wing Core Reinforcement Stone
+[1] Ring / Necklace PvP (3~4 Opt)
+[1] 4th Wing Relic
+[1] Seed Sphere (Step 7)</td>
+            <td class="bold">--</td>
+            <td>Requires x255 Golden Cherry Blossom Branch</td>
+        </tr>
+		        <tr>
+            <td class="bold">Golden Dragon Invasion</td>
             <td>Box of Kundun +1~+5</td>
-            <td>00:00, 12:00</td>
+            <td class="bold">00:00, 12:00</td>
             <td>x5 Golden Mobs / maps, Multiple Maps</td>
         </tr>
+		        <tr>
+            <td class="bold">Golden Dragon Invasion</td>
+            <td>Box of Kundun +1~+5</td>
+            <td class="bold">00:00, 12:00</td>
+            <td>x5 Golden Mobs / maps, Multiple Maps</td>
+        </tr>
+		        <tr>
+            <td class="bold">Golden Dragon Invasion</td>
+            <td>Box of Kundun +1~+5</td>
+            <td class="bold">00:00, 12:00</td>
+            <td>x5 Golden Mobs / maps, Multiple Maps</td>
+        </tr>
+		
     </table>
 </body>
 </html>
