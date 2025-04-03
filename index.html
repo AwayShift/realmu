@@ -45,11 +45,16 @@
             color: #333;
             border-left: 5px solid #0047b3;
         }
+                #clock {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-      <h2>Selecione um horário:</h2>
-    <input type="time" id="timeInput" onchange="filterEvents()">
+    <h2>Horário Atual (GMT-3 - São Paulo):</h2>
+    <div id="clock">--:--</div>
     <table id="eventTable">
         <tr>
             <th>Evento</th>
@@ -312,13 +317,19 @@ Segunda - 00:15</td>
             <td>x15 Soldiers, x1 White Wizard / channel Lorencia, Noria, Devias Mapa</td>
         </tr>		
     </table>
-        <script>
-        function filterEvents() {
-            const inputTime = document.getElementById('timeInput').value;
-            if (!inputTime) return;
-            
-            const inputHours = parseInt(inputTime.split(':')[0]);
-            const inputMinutes = parseInt(inputTime.split(':')[1]);
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: "America/Sao_Paulo", hour12: false, hour: "2-digit", minute: "2-digit" };
+            const formatter = new Intl.DateTimeFormat("pt-BR", options);
+            const timeString = formatter.format(now);
+            document.getElementById("clock").innerText = timeString;
+            filterEvents(timeString);
+        }
+
+        function filterEvents(currentTime) {
+            const [inputHours, inputMinutes] = currentTime.split(':').map(Number);
+            const inputTimeInMinutes = inputHours * 60 + inputMinutes;
             
             document.querySelectorAll('#eventTable tr').forEach(row => {
                 row.classList.remove('highlight');
@@ -330,13 +341,18 @@ Segunda - 00:15</td>
                     const times = cell.innerText.split(', ');
                     times.forEach(time => {
                         const [hours, minutes] = time.split(':').map(Number);
-                        if (Math.abs((hours * 60 + minutes) - (inputHours * 60 + inputMinutes)) <= 60) {
+                        const eventTimeInMinutes = hours * 60 + minutes;
+                        
+                        if (eventTimeInMinutes >= inputTimeInMinutes && eventTimeInMinutes <= inputTimeInMinutes + 60) {
                             row.classList.add('highlight');
                         }
                     });
                 });
             });
         }
+
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
