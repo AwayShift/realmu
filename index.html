@@ -39,22 +39,22 @@
         }
         .bold {
             font-weight: bold;
+            white-space: pre-line; /* Permite quebra de linha */
         }
          .highlight {
             background-color: #b3daff;
             color: #333;
             border-left: 5px solid #0047b3;
         }
-                #clock {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
     <h2>Horário Atual (GMT-3 - São Paulo):</h2>
     <div id="clock">--:--</div>
+    
+    <h2>Selecione um horário:</h2>
+    <input type="time" id="timeInput" onchange="updateHighlight()">
+    
     <table id="eventTable">
         <tr>
             <th>Evento</th>
@@ -279,15 +279,15 @@
 [1] Talisman of Chaos Assembly (100%)<br>
 [1] Elemental Talisman of Chaos (100%)</td>
             <td class="bold">Sexta - 15:15<br>
-Sexta - 21:15<br>
-Sábado - 03:15<br>
-Sábado - 09:15<br>
-Sábado - 15:15<br>
-Sábado - 21:15<br>
-Domingo - 03:15<br>
-Domingo - 09:15<br>
-Domingo - 15:15<br>
-Domingo - 21:15</td>
+Sexta  21:15<br>
+Sábado  03:15<br>
+Sábado  09:15<br>
+Sábado  15:15<br>
+Sábado  21:15<br>
+Domingo  03:15<br>
+Domingo  09:15<br>
+Domingo  15:15<br>
+Domingo  21:15</td>
             <td>x20 Golden Goblins / channel Aida, Karutan, Raklion Mapa</td>
         </tr>
 		        <tr>
@@ -306,29 +306,44 @@ Domingo - 21:15</td>
 [10] Jewel of Life<br>
 [1] Ability Crystal [B]</td>
             <td class="bold">Sábado - 00:15<br>
-Sábado - 06:15<br>
-Sábado - 12:15<br>
-Sábado - 18:15<br>
-Domingo - 00:15<br>
-Domingo - 06:15<br>
-Domingo - 12:15<br>
-Domingo - 18:15<br>
-Segunda - 00:15</td>
+Sábado  06:15<br>
+Sábado  12:15<br>
+Sábado  18:15<br>
+Domingo  00:15<br>
+Domingo  06:15<br>
+Domingo  12:15<br>
+Domingo  18:15<br>
+Segunda  00:15</td>
             <td>x15 Soldiers, x1 White Wizard / channel Lorencia, Noria, Devias Mapa</td>
         </tr>		
     </table>
     <script>
         function updateClock() {
             const now = new Date();
-            const options = { timeZone: "America/Sao_Paulo", hour12: false, hour: "2-digit", minute: "2-digit" };
+            const options = { timeZone: "America/Sao_Paulo", hour12: false, hour: "2-digit", minute: "2-digit", weekday: "long" };
             const formatter = new Intl.DateTimeFormat("pt-BR", options);
-            const timeString = formatter.format(now);
-            document.getElementById("clock").innerText = timeString;
-            filterEvents(timeString);
+            const formattedDate = formatter.formatToParts(now);
+            
+            let currentDay = formattedDate.find(part => part.type === "weekday").value;
+            let currentTime = formattedDate.find(part => part.type === "hour").value + ":" + formattedDate.find(part => part.type === "minute").value;
+            document.getElementById("clock").innerText = currentDay + " " + currentTime;
+            updateHighlight();
         }
 
-        function filterEvents(currentTime) {
-            const [inputHours, inputMinutes] = currentTime.split(':').map(Number);
+        function updateHighlight() {
+            const clockTime = document.getElementById("clock").innerText;
+            const inputTime = document.getElementById("timeInput").value;
+            
+            let referenceTime = clockTime.split(' ')[1];
+            let referenceDay = clockTime.split(' ')[0];
+            const manualInput = inputTime !== "";
+
+            if (manualInput) {
+                referenceTime = inputTime;
+                referenceDay = null;
+            }
+            
+            const [inputHours, inputMinutes] = referenceTime.split(':').map(Number);
             const inputTimeInMinutes = inputHours * 60 + inputMinutes;
             
             document.querySelectorAll('#eventTable tr').forEach(row => {
@@ -338,12 +353,24 @@ Segunda - 00:15</td>
             document.querySelectorAll('#eventTable tr').forEach(row => {
                 const timeCells = row.querySelectorAll('td.bold');
                 timeCells.forEach(cell => {
-                    const times = cell.innerText.split(', ');
+                    const times = cell.innerText.split(/\n|, /);
                     times.forEach(time => {
-                        const [hours, minutes] = time.split(':').map(Number);
+                        let timeStr = time.trim();
+                        let day = null;
+
+                        if (timeStr.includes(' ')) {
+                            const parts = timeStr.split(' ');
+                            day = parts[0];
+                            timeStr = parts[1];
+                        }
+
+                        const [hours, minutes] = timeStr.split(':').map(Number);
                         const eventTimeInMinutes = hours * 60 + minutes;
-                        
-                        if (eventTimeInMinutes >= inputTimeInMinutes && eventTimeInMinutes <= inputTimeInMinutes + 60) {
+
+                        if (
+                            (!manualInput && day === referenceDay && eventTimeInMinutes >= inputTimeInMinutes && eventTimeInMinutes <= inputTimeInMinutes + 60) ||
+                            (manualInput && eventTimeInMinutes >= inputTimeInMinutes && eventTimeInMinutes <= inputTimeInMinutes + 60)
+                        ) {
                             row.classList.add('highlight');
                         }
                     });
