@@ -5,7 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela de Eventos</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <button id="btnTop" class="btn-top">↑</button>
     <style>
+    .btn-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #666699;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: none; /* Inicialmente oculto */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-top:hover {
+    background-color: #0056b3;
+}
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -528,5 +551,22 @@ function updateHighlight(isManual = false) {
         setInterval(updateClock, 1000);
         updateClock();
     </script>
+    <script>document.addEventListener("DOMContentLoaded", function () {
+    let btnTop = document.getElementById("btnTop");
+
+    // Mostrar o botão quando o usuário rolar a página
+    window.onscroll = function () {
+        if (document.documentElement.scrollTop > 100) {
+            btnTop.style.display = "flex";
+        } else {
+            btnTop.style.display = "none";
+        }
+    };
+
+    // Rolar suavemente para o topo quando o botão for clicado
+    btnTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+});</script>
 </body>
 </html>
