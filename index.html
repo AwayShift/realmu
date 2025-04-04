@@ -94,6 +94,8 @@
 
     <h2>Selecione um horário:</h2>
     <input type="time" id="timeInput" onchange="updateHighlight(true)">
+    
+<div id="eventCount" style="margin-bottom: 10px; font-weight: bold;"></div>
 
     <table id="eventTable">
         <tr>
@@ -428,63 +430,49 @@
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
-        function updateHighlight(isManual = false) {
-            if (isManual) {
-                useManualTime = true;
-                manualTime = document.getElementById("timeInput").value;
+function updateHighlight(isManual = false) {
+    let eventCount = 0; // Inicializa o contador
+
+    if (isManual) {
+        useManualTime = true;
+        manualTime = document.getElementById("timeInput").value;
+    }
+
+    let currentDate = new Date();
+    const options = { timeZone: "America/Sao_Paulo", weekday: "long" };
+    const currentDay = new Intl.DateTimeFormat("pt-BR", options).format(currentDate).toLowerCase();
+
+    let referenceTime = useManualTime ? manualTime : document.getElementById("clock").innerText.split(' ')[1];
+    const [inputHours, inputMinutes] = referenceTime.split(":").map(Number);
+    const inputTimeInMinutes = inputHours * 60 + inputMinutes;
+
+    document.querySelectorAll("#eventTable tr").forEach(row => {
+        row.classList.remove("highlight");
+        const timeCell = row.querySelectorAll("td.bold")[1];
+        const dayCell = row.querySelectorAll("td.bold")[2];
+
+        if (!timeCell || !dayCell) return;
+
+        const eventTimes = timeCell.innerText.split(/[,\\n]+/);
+        const daysText = dayCell.innerText.trim().toLowerCase();
+        let validDay = daysText === "diário" || daysText.split(/,| e | a /).map(d => d.trim()).includes(currentDay);
+
+        if (!validDay) return;
+
+        for (let timeStr of eventTimes) {
+            if (!timeStr.includes(":")) continue;
+            const [h, m] = timeStr.trim().split(":").map(Number);
+            const eventMinutes = h * 60 + m;
+            const diff = Math.abs(eventMinutes - inputTimeInMinutes);
+
+            if (diff <= 30) {
+                row.classList.add("highlight");
+                eventCount++; // Incrementa o contador
+                break;
             }
-
-            let currentDate = new Date();
-            const options = { timeZone: "America/Sao_Paulo", weekday: "long" };
-            const currentDay = new Intl.DateTimeFormat("pt-BR", options).format(currentDate).toLowerCase();
-
-            let referenceTime = useManualTime ? manualTime : document.getElementById("clock").innerText.split(' ')[1];
-            let referenceDay = currentDay;
-
-            const [inputHours, inputMinutes] = referenceTime.split(":").map(Number);
-            const inputTimeInMinutes = inputHours * 60 + inputMinutes;
-
-            document.querySelectorAll("#eventTable tr").forEach(row => {
-                row.classList.remove("highlight");
-                const timeCell = row.querySelectorAll("td.bold")[1];
-                const dayCell = row.querySelectorAll("td.bold")[2];
-
-                if (!timeCell || !dayCell) return;
-
-                const eventTimes = timeCell.innerText.split(/[,\n]+/);
-                const daysText = dayCell.innerText.trim().toLowerCase();
-                let validDay = false;
-
-                if (daysText === "diário") {
-                    validDay = true;
-                } else {
-                    const days = daysText.split(/,| e | a /).map(d => d.trim());
-                    const dayIndex = weekMap[currentDay];
-                    const weekDays = Object.keys(weekMap);
-
-                    if (days.length === 2 && weekDays.includes(days[0]) && weekDays.includes(days[1])) {
-                        const start = weekMap[days[0]];
-                        const end = weekMap[days[1]];
-                        validDay = (start <= end) ? (dayIndex >= start && dayIndex <= end) : (dayIndex >= start || dayIndex <= end);
-                    } else {
-                        validDay = days.includes(currentDay);
-                    }
-                }
-
-                if (!validDay) return;
-
-                for (let timeStr of eventTimes) {
-                    if (!timeStr.includes(":")) continue;
-                    const [h, m] = timeStr.trim().split(":".trim()).map(Number);
-                    const eventMinutes = h * 60 + m;
-                    const diff = Math.abs(eventMinutes - inputTimeInMinutes);
-
-                    if (diff <= 30) {
-                        row.classList.add("highlight");
-                        break;
-                    }
-                }
-            });
+        }
+    });
+    document.getElementById('eventCount').innerText = `${eventCount} evento(s) encontrado(s).`;
         }
 
         setInterval(updateClock, 1000);
