@@ -51,40 +51,45 @@
 <body>
     <h2>Horário Atual (GMT-3 - São Paulo):</h2>
     <div id="clock">--:--</div>
-    
+    <button id="resetButton" onclick="resetToCurrentTime()">Usar horário atual</button>
+
     <h2>Selecione um horário:</h2>
-    <input type="time" id="timeInput" onchange="updateHighlight()">
-    <button onclick="resetClock()">Resetar Relógio</button>
-    
+    <input type="time" id="timeInput" onchange="updateHighlight(true)">
+
     <table id="eventTable">
         <tr>
             <th>Evento</th>
             <th>Prêmios</th>
             <th>Horário (GMT-3)</th>
+            <th>Dias</th>
             <th>Informação</th>
         </tr>
         <tr>
             <td class="bold">Acheron Guardian</td>
             <td>5 Mysterious Stone</td>
             <td class="bold">01:00, 13:00, 18:00</td>
+            <td class="bold">Diário</td>
             <td>Join through Arka War NPC</td>
         </tr>
         <tr>
             <td class="bold">Tigers Invasion </td>
             <td>180 ~ 200 Ruud, 1 Goblin Point</td>
             <td class="bold">Every minute 00, Every minute 30</td>
+            <td class="bold">Diário</td>
             <td>x20 Tigers / channel, Random Map</td>
         </tr>
         <tr> 
             <td class="bold">Blue Dragon Invasion</td>
             <td>Mysterious Reward</td>
             <td class="bold">Every 18h - Random Respawn</td>
+            <td class="bold">Diário</td>
             <td>x1 Blue Dragon / channel, Random Map</td>
         </tr>
 		 <tr>
             <td class="bold">Golden Dragon Invasion</td>
             <td>Box of Kundun +1~+5</td>
             <td class="bold">00:00, 12:00</td>
+            <td class="bold">Diário</td>
             <td>x5 Golden Mobs / maps, Multiple Maps</td>
         </tr>
         <tr>
@@ -98,6 +103,7 @@
               [1] Mastery Box (Minor)<br>
               [2] Intermediate Spirit Stone</td>
             <td class="bold">01:40, 13:40</td>
+            <td class="bold">Diário</td>
             <td>x15 Balrog / channel LostTower</td>
         </tr>
 		        <tr>
@@ -110,6 +116,7 @@
 [1] Mastery Box (Minor)<br>
 [2] Lesser Spirit Stone</td>
             <td class="bold">08:00, 20:00</td>
+            <td class="bold">Diário</td>
             <td>x15 Hydra / channel Atlans</td>
         </tr>
 		        <tr>
@@ -126,6 +133,7 @@
 [1] Mastery Box (Minor)<br>
 [2] Greater Spirit Stone</td>
             <td class="bold">09:00, 21:00</td>
+            <td class="bold">Diário</td>
             <td>x15 Zaikan / channel Tarkan</td>
         </tr>
 		        <tr>
@@ -138,6 +146,7 @@
 [1] Mastery Box (Minor)<br>
 [1] Miracle Coin</td>
             <td class="bold">04:00, 16:00</td>
+            <td class="bold">Diário</td>
             <td>x15 Gorgon / channel Dungeon</td>
         </tr>
 		        <tr>
@@ -150,6 +159,7 @@
 [1] Mastery Box (Minor)<br>
 [1] Miracle Coin</td>
             <td class="bold">05:50, 17:50</td>
+            <td class="bold">Diário</td>
             <td>x15 Ice Queen / channel Devias</td>
         </tr>
 		        <tr>
@@ -162,6 +172,7 @@
 [10] Guardian Enhanced Stone<br>
 [10] Elite Guardian Enhanced Stone</td>
             <td class="bold">06:25, 18:25</td>
+            <td class="bold">Diário</td>
             <td>x15 Death King / channel Lorencia</td>
         </tr>
 		        <tr>
@@ -177,6 +188,7 @@
 <strong>Bonus Reward 2 (5% chance):</strong><br>
 [1] Talisman of Chaos Assembly</td>
             <td class="bold">07:15, 19:15</td>
+            <td class="bold">Diário</td>
             <td>x15 Red Dragon / channel Lorencia, Noria</td>
         </tr>
 		        <tr>
@@ -187,6 +199,7 @@
 [10] Elemental Rune (chance: 30%)<br>
 [1] Elemental Talisman of Chaos (chance: 10%)</td>
             <td class="bold">00:00, 12:00</td>
+            <td class="bold">Diário</td>
             <td>x10 Elemental Elites / channel Acheron - Ubaid</td>
         </tr>
 		        <tr>
@@ -197,6 +210,7 @@
 [10] Elemental Rune (chance: 30%)<br>
 [1] Elemental Talisman of Luck (chance: 10%)</td>
             <td class="bold">00:00, 12:00</td>
+            <td class="bold">Diário</td>
             <td>x5 Elemental Elites / channel Acheron - Debenter</td>
         </tr>
 		        <tr>
@@ -212,6 +226,7 @@
 [1] Seed Sphere (Step 3)<br>
 [1] Elemental Talisman of Chaos (100%)</td>
             <td class="bold">--</td>
+            <td class="bold">Sem Data</td>
             <td>Requires x10 White Cherry Blossom Branch</td>
         </tr>
 		        <tr>
@@ -226,6 +241,7 @@
 [1] 3rd Wing Relic<br>
 [1] Seed Sphere (Step 5)</td>
             <td class="bold">--</td>
+            <td class="bold">Sem Data</td>
             <td>Requires x50 Red Cherry Blossom Branch</td>
         </tr>
 		        <tr>
@@ -240,6 +256,7 @@
 [1] 4th Wing Relic<br>
 [1] Seed Sphere (Step 7)</td>
             <td class="bold">--</td>
+            <td class="bold">Sem Data</td>
             <td>Requires x255 Golden Cherry Blossom Branch</td>
         </tr>
 		        <tr>
@@ -279,16 +296,17 @@
 [5] Ability Crystal [B] (100%)<br>
 [1] Talisman of Chaos Assembly (100%)<br>
 [1] Elemental Talisman of Chaos (100%)</td>
-            <td class="bold">Sexta  15:15<br>
-Sexta  21:15<br>
-Sábado  03:15<br>
-Sábado  09:15<br>
-Sábado  15:15<br>
-Sábado  21:15<br>
-Domingo  03:15<br>
-Domingo  09:15<br>
-Domingo  15:15<br>
-Domingo  21:15</td>
+            <td class="bold">15:15<br>
+21:15<br>
+03:15<br>
+09:15<br>
+15:15<br>
+21:15<br>
+03:15<br>
+09:15<br>
+15:15<br>
+21:15</td>
+<td class="bold">Segunda-Feira, Quinta-Feira, Sábado, Domingo</td>
             <td>x20 Golden Goblins / channel Aida, Karutan, Raklion Mapa</td>
         </tr>
 		        <tr>
@@ -306,88 +324,119 @@ Domingo  21:15</td>
 [10] Jewel of Creation<br>
 [10] Jewel of Life<br>
 [1] Ability Crystal [B]</td>
-            <td class="bold">Sábado - 00:15<br>
-Sábado  06:15<br>
-Sábado  12:15<br>
-Sábado  18:15<br>
-Domingo  00:15<br>
-Domingo  06:15<br>
-Domingo  12:15<br>
-Domingo  18:15<br>
-Segunda  00:15</td>
+            <td class="bold">00:15<br>
+06:15<br>
+12:15<br>
+18:15<br>
+00:15<br>
+06:15<br>
+12:15<br>
+18:15<br>
+00:15</td>
+             <td class="bold">Sábado<br>Domingo<br>Segunda</td>
             <td>x15 Soldiers, x1 White Wizard / channel Lorencia, Noria, Devias Mapa</td>
         </tr>		
     </table>
-   <script>
-        let manualInput = false;
+ <script>
+        const weekMap = {
+            "domingo": 0,
+            "segunda": 1,
+            "terça": 2,
+            "quarta": 3,
+            "quinta": 4,
+            "sexta": 5,
+            "sábado": 6
+        };
+
+        let useManualTime = false;
+        let manualTime = "";
 
         function updateClock() {
-            if (manualInput) return;
-            
-            const now = new Date();
-            const options = { timeZone: "America/Sao_Paulo", hour12: false, hour: "2-digit", minute: "2-digit", weekday: "long" };
-            const formatter = new Intl.DateTimeFormat("pt-BR", options);
-            const formattedDate = formatter.formatToParts(now);
-            
-            let currentDay = formattedDate.find(part => part.type === "weekday").value;
-            let currentTime = formattedDate.find(part => part.type === "hour").value + ":" + formattedDate.find(part => part.type === "minute").value;
-            document.getElementById("clock").innerText = currentDay + " " + currentTime;
-            updateHighlight();
-        }
-
-        function updateHighlight() {
-            const clockTime = document.getElementById("clock").innerText;
-            const inputTime = document.getElementById("timeInput").value;
-            
-            let referenceTime = clockTime.split(' ')[1];
-            let referenceDay = clockTime.split(' ')[0];
-            manualInput = inputTime !== "";
-
-            if (manualInput) {
-                referenceTime = inputTime;
-                referenceDay = null; // Ignora o dia da semana ao buscar manualmente
+            if (!useManualTime) {
+                const now = new Date();
+                const options = {
+                    timeZone: "America/Sao_Paulo",
+                    hour12: false,
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    weekday: "long"
+                };
+                const formatter = new Intl.DateTimeFormat("pt-BR", options);
+                const parts = formatter.formatToParts(now);
+                let currentDay = parts.find(p => p.type === "weekday").value.toLowerCase();
+                let currentTime = parts.find(p => p.type === "hour").value + ":" + parts.find(p => p.type === "minute").value;
+                document.getElementById("clock").innerText = capitalize(currentDay) + " " + currentTime;
+                updateHighlight(false);
             }
-            
-            const [inputHours, inputMinutes] = referenceTime.split(':').map(Number);
-            const inputTimeInMinutes = inputHours * 60 + inputMinutes;
-            
-            document.querySelectorAll('#eventTable tr').forEach(row => {
-                row.classList.remove('highlight');
-            });
-            
-            document.querySelectorAll('#eventTable tr').forEach(row => {
-                const timeCells = row.querySelectorAll('td.bold');
-                timeCells.forEach(cell => {
-                    const times = cell.innerText.split(', ');
-                    times.forEach(time => {
-                        let timeStr = time;
-                        let day = null;
-
-                        if (time.includes(' ')) {
-                            const parts = time.split(' ');
-                            day = parts[0];
-                            timeStr = parts[1];
-                        }
-
-                        const [hours, minutes] = timeStr.split(':').map(Number);
-                        const eventTimeInMinutes = hours * 60 + minutes;
-
-                        if (
-                            eventTimeInMinutes >= inputTimeInMinutes - 30 && 
-                            eventTimeInMinutes <= inputTimeInMinutes + 30 && 
-                            (!manualInput || day === referenceDay)
-                        ) {
-                            row.classList.add('highlight');
-                        }
-                    });
-                });
-            });
         }
 
-        function resetClock() {
+        function resetToCurrentTime() {
+            useManualTime = false;
             document.getElementById("timeInput").value = "";
-            manualInput = false;
             updateClock();
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function updateHighlight(isManual = false) {
+            if (isManual) {
+                useManualTime = true;
+                manualTime = document.getElementById("timeInput").value;
+            }
+
+            let currentDate = new Date();
+            const options = { timeZone: "America/Sao_Paulo", weekday: "long" };
+            const currentDay = new Intl.DateTimeFormat("pt-BR", options).format(currentDate).toLowerCase();
+
+            let referenceTime = useManualTime ? manualTime : document.getElementById("clock").innerText.split(' ')[1];
+            let referenceDay = currentDay;
+
+            const [inputHours, inputMinutes] = referenceTime.split(":").map(Number);
+            const inputTimeInMinutes = inputHours * 60 + inputMinutes;
+
+            document.querySelectorAll("#eventTable tr").forEach(row => {
+                row.classList.remove("highlight");
+                const timeCell = row.querySelectorAll("td.bold")[1];
+                const dayCell = row.querySelectorAll("td.bold")[2];
+
+                if (!timeCell || !dayCell) return;
+
+                const eventTimes = timeCell.innerText.split(/[,\n]+/);
+                const daysText = dayCell.innerText.trim().toLowerCase();
+                let validDay = false;
+
+                if (daysText === "diário") {
+                    validDay = true;
+                } else {
+                    const days = daysText.split(/,| e | a /).map(d => d.trim());
+                    const dayIndex = weekMap[currentDay];
+                    const weekDays = Object.keys(weekMap);
+
+                    if (days.length === 2 && weekDays.includes(days[0]) && weekDays.includes(days[1])) {
+                        const start = weekMap[days[0]];
+                        const end = weekMap[days[1]];
+                        validDay = (start <= end) ? (dayIndex >= start && dayIndex <= end) : (dayIndex >= start || dayIndex <= end);
+                    } else {
+                        validDay = days.includes(currentDay);
+                    }
+                }
+
+                if (!validDay) return;
+
+                for (let timeStr of eventTimes) {
+                    if (!timeStr.includes(":")) continue;
+                    const [h, m] = timeStr.trim().split(":".trim()).map(Number);
+                    const eventMinutes = h * 60 + m;
+                    const diff = Math.abs(eventMinutes - inputTimeInMinutes);
+
+                    if (diff <= 30) {
+                        row.classList.add("highlight");
+                        break;
+                    }
+                }
+            });
         }
 
         setInterval(updateClock, 1000);
