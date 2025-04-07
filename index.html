@@ -187,9 +187,11 @@
   justify-content: center;
 ">
   💎
+  
 </button>
 
 <!-- Popup do Conversor -->
+
 <div id="converterModal" style="
   display: none;
   position: fixed;
@@ -291,7 +293,6 @@
     margin-bottom: 5px;
   }
 </style>
-
 <div class="converter-box">
   <h3>Conversor de Joia para WCoin</h3>
 
@@ -330,6 +331,23 @@
   <button onclick="updateRates()">Atualizar Valores</button>
 </div>
 
+<script>
+  // Fecha o popup ao clicar fora dele
+  document.addEventListener('click', function (event) {
+    const popup = document.getElementById('converterModal');
+    const button = document.getElementById('converterBtn');
+    const innerPopup = popup.querySelector('div'); // div interna com o conteúdo
+
+    if (!popup || !button || popup.style.display === 'none') return;
+
+    const clickedInsidePopup = innerPopup.contains(event.target);
+    const clickedButton = button.contains(event.target);
+
+    if (!clickedInsidePopup && !clickedButton) {
+      popup.style.display = 'none';
+    }
+  });
+</script>
 <script>
   const rates = {
     bless: 10,
