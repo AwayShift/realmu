@@ -302,6 +302,7 @@
       <option value="soul">Soul</option>
       <option value="life">Life</option>
       <option value="chaos">Chaos</option>
+      <option value="harmony">Harmony</option>
     </select>
   </div>
 
@@ -312,13 +313,14 @@
 
   <p id="conversionResult" class="result-text">Total: 0 WCoin</p>
 
-  <h4 style="margin-top: 20px;">Editar valores (WCoin por joia):</h4>
+  <h4 style="margin-top: 20px;">Altera a cotação por WCoin:</h4>
 
   <div class="rate-inputs">
     <div><label>Bless:</label><input type="number" id="rateBless" value="10" min="0" /></div>
     <div><label>Soul:</label><input type="number" id="rateSoul" value="12" min="0" /></div>
     <div><label>Life:</label><input type="number" id="rateLife" value="15" min="0" /></div>
     <div><label>Chaos:</label><input type="number" id="rateChaos" value="8" min="0" /></div>
+    <div><label>Harmony:</label><input type="number" id="rateHarmony" value="8" min="0" /></div>
   </div>
 
   <button onclick="updateRates()">Atualizar Valores</button>
@@ -329,6 +331,7 @@
     bless: 10,
     soul: 12,
     life: 15,
+    harmony: 15,
     chaos: 8
   };
 
@@ -340,6 +343,7 @@
       document.getElementById('rateBless').value = rates.bless;
       document.getElementById('rateSoul').value = rates.soul;
       document.getElementById('rateLife').value = rates.life;
+      document.getElementById('rateHarmony').value = rates.harmony;
       document.getElementById('rateChaos').value = rates.chaos;
     }
   }
@@ -359,6 +363,7 @@
     rates.bless = parseFloat(document.getElementById('rateBless').value);
     rates.soul = parseFloat(document.getElementById('rateSoul').value);
     rates.life = parseFloat(document.getElementById('rateLife').value);
+    rates.harmony = parseFloat(document.getElementById('rateHarmony').value);
     rates.chaos = parseFloat(document.getElementById('rateChaos').value);
 
     // Salva no localStorage
