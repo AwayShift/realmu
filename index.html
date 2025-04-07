@@ -303,6 +303,8 @@
       <option value="life">Life</option>
       <option value="chaos">Chaos</option>
       <option value="harmony">Harmony</option>
+      <option value="tca">Talisman of Chaos Assembly(TCA)</option>
+      <option value="ability crystal">Ability Crystal</option>
     </select>
   </div>
 
@@ -321,6 +323,8 @@
     <div><label>Life:</label><input type="number" id="rateLife" value="15" min="0" /></div>
     <div><label>Chaos:</label><input type="number" id="rateChaos" value="8" min="0" /></div>
     <div><label>Harmony:</label><input type="number" id="rateHarmony" value="8" min="0" /></div>
+    <div><label>TCA:</label><input type="number" id="rateTCA" value="8" min="0" /></div>
+    <div><label>Ability Crystal:</label><input type="number" id="rateAbility" value="8" min="0" /></div>
   </div>
 
   <button onclick="updateRates()">Atualizar Valores</button>
@@ -332,6 +336,8 @@
     soul: 12,
     life: 15,
     harmony: 15,
+    tca: 2,
+    ability: 5,
     chaos: 8
   };
 
@@ -345,6 +351,8 @@
       document.getElementById('rateLife').value = rates.life;
       document.getElementById('rateHarmony').value = rates.harmony;
       document.getElementById('rateChaos').value = rates.chaos;
+      document.getElementById('rateTCA').value = rates.tca;
+      document.getElementById('rateAbility').value = rates.ability;
     }
   }
 
@@ -365,6 +373,8 @@
     rates.life = parseFloat(document.getElementById('rateLife').value);
     rates.harmony = parseFloat(document.getElementById('rateHarmony').value);
     rates.chaos = parseFloat(document.getElementById('rateChaos').value);
+    rates.tca = parseFloat(document.getElementById('rateTCA').value);  
+    rates.ability = parseFloat(document.getElementById('rateAbility').value);
 
     // Salva no localStorage
     localStorage.setItem("jewelRates", JSON.stringify(rates));
