@@ -167,7 +167,215 @@
 
     <h2>Selecione um horário:</h2>
     <input type="time" id="timeInput" onchange="updateHighlight(true)">
-    
+ <!-- Ícone para abrir o conversor -->
+<button onclick="openConverter()" title="Cotação de Joias" id="converterBtn" style="
+  position: fixed;
+  bottom: 80px; /* Ajuste para ficar acima do botão de voltar ao topo */
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+">
+  💎
+</button>
+
+<!-- Popup do Conversor -->
+<div id="converterModal" style="
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+">
+  <div style="
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 550px;
+    position: relative;
+  ">
+    <!-- Botão de fechar -->
+    <button onclick="closeConverter()" style="
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+    ">&times;</button>
+
+    <style>
+  .converter-box {
+    margin-top: 30px;
+    padding: 20px;
+    max-width: 500px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .converter-box h3 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    color: #333;
+  }
+
+  .converter-box label {
+    margin-top: 10px;
+    display: inline-block;
+    width: 80px;
+    font-weight: 500;
+    color: #444;
+  }
+
+  .converter-box input,
+  .converter-box select {
+    padding: 6px 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    width: 100px;
+  }
+
+  .converter-box input[type="number"] {
+    width: 70px;
+  }
+
+  .converter-box button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .converter-box button:hover {
+    background: #0056b3;
+  }
+
+  .result-text {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #2a2a2a;
+  }
+
+  .rate-inputs {
+    margin-top: 10px;
+  }
+
+  .rate-inputs div {
+    margin-bottom: 5px;
+  }
+</style>
+
+<div class="converter-box">
+  <h3>Conversor de Joia para WCoin</h3>
+
+  <div>
+    <label for="jewelType">Joia:</label>
+    <select id="jewelType">
+      <option value="bless">Bless</option>
+      <option value="soul">Soul</option>
+      <option value="life">Life</option>
+      <option value="chaos">Chaos</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="jewelAmount">Qtd:</label>
+    <input type="number" id="jewelAmount" value="1" min="1" />
+  </div>
+
+  <p id="conversionResult" class="result-text">Total: 0 WCoin</p>
+
+  <h4 style="margin-top: 20px;">Editar valores (WCoin por joia):</h4>
+
+  <div class="rate-inputs">
+    <div><label>Bless:</label><input type="number" id="rateBless" value="10" min="0" /></div>
+    <div><label>Soul:</label><input type="number" id="rateSoul" value="12" min="0" /></div>
+    <div><label>Life:</label><input type="number" id="rateLife" value="15" min="0" /></div>
+    <div><label>Chaos:</label><input type="number" id="rateChaos" value="8" min="0" /></div>
+  </div>
+
+  <button onclick="updateRates()">Atualizar Valores</button>
+</div>
+
+<script>
+  const rates = {
+    bless: 10,
+    soul: 12,
+    life: 15,
+    chaos: 8
+  };
+
+  // Recuperar do localStorage
+  function loadRates() {
+    const savedRates = JSON.parse(localStorage.getItem("jewelRates"));
+    if (savedRates) {
+      Object.assign(rates, savedRates);
+      document.getElementById('rateBless').value = rates.bless;
+      document.getElementById('rateSoul').value = rates.soul;
+      document.getElementById('rateLife').value = rates.life;
+      document.getElementById('rateChaos').value = rates.chaos;
+    }
+  }
+
+  const jewelTypeEl = document.getElementById('jewelType');
+  const jewelAmountEl = document.getElementById('jewelAmount');
+  const resultEl = document.getElementById('conversionResult');
+
+  function updateConversion() {
+    const type = jewelTypeEl.value;
+    const amount = parseInt(jewelAmountEl.value);
+    const total = rates[type] * amount;
+    resultEl.innerHTML = `Total: ${total} WCoin`;
+  }
+
+  function updateRates() {
+    rates.bless = parseFloat(document.getElementById('rateBless').value);
+    rates.soul = parseFloat(document.getElementById('rateSoul').value);
+    rates.life = parseFloat(document.getElementById('rateLife').value);
+    rates.chaos = parseFloat(document.getElementById('rateChaos').value);
+
+    // Salva no localStorage
+    localStorage.setItem("jewelRates", JSON.stringify(rates));
+    updateConversion();
+  }
+
+  jewelTypeEl.addEventListener('change', updateConversion);
+  jewelAmountEl.addEventListener('input', updateConversion);
+
+  loadRates();      // carrega taxas salvas (se houver)
+  updateConversion(); // inicializa
+</script>
+
+
+  </div>
+</div>   
 <div id="eventCount" style="margin-bottom: 10px; font-weight: bold;"></div>
 
     <table id="eventTable">
@@ -461,6 +669,12 @@
         </tr>		
     </table>
  <script>
+     function openConverter() {
+    document.getElementById('converterModal').style.display = 'flex';
+  }
+  function closeConverter() {
+    document.getElementById('converterModal').style.display = 'none';
+  }
         const weekMap = {
             "domingo": 0,
             "segunda": 1,
