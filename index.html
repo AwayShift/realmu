@@ -161,15 +161,48 @@
     </style>
 </head>
 <body>
-	<!-- Botão do Conversor -->
-<button id="abrirConversor" style="position: fixed; bottom: 90px; right: 20px; z-index: 999;">Conversor WCoin</button>
+<!-- Botão flutuante com ícone -->
+<button id="abrirConversor" style="
+  position: fixed;
+  bottom: 80px; /* Ajuste para ficar acima do botão de voltar ao topo */
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+">
+  💎
+</button>
 
-<!-- Popup do Conversor -->
-<div id="popupConversor" style="display: none; position: fixed; bottom: 150px; right: 20px; background: #222; color: #fff; padding: 15px; border-radius: 10px; z-index: 1000; width: 250px;">
-  <h3 style="margin-top: 0;">Conversor de Itens</h3>
+<!-- Popup -->
+<div id="popupConversor" style="
+  display: none;
+  position: fixed;
+  bottom: 150px;
+  right: 20px;
+  background: #1e1e2f;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  width: 280px;
+  font-family: Arial, sans-serif;
+  transition: all 0.3s ease;
+">
+  <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 18px;">🔄 Conversor de Itens</h3>
 
-  <label for="itemSelect">Escolha o item:</label><br/>
-  <select id="itemSelect" style="width: 100%; margin: 10px 0;">
+  <label for="itemSelect" style="font-weight: bold;">Item:</label><br/>
+  <select id="itemSelect" style="width: 100%; padding: 8px; margin: 8px 0 12px; border-radius: 6px; border: none; outline: none;">
     <option value="Bless">Bless</option>
     <option value="Soul">Soul</option>
     <option value="Life">Life</option>
@@ -177,10 +210,32 @@
     <option value="Harmony">Harmony</option>
   </select>
 
-  <label for="itemQtd">Quantidade:</label><br/>
-  <input type="number" id="itemQtd" value="1" min="1" style="width: 100%; margin: 10px 0;" />
+  <label for="itemQtd" style="font-weight: bold;">Quantidade:</label><br/>
+  <input type="number" id="itemQtd" value="1" min="1" style="width: 100%; padding: 8px; margin: 8px 0 12px; border-radius: 6px; border: none; outline: none;" />
 
-  <p id="resultadoConversao" style="margin: 0;"></p>
+  <p id="resultadoConversao" style="margin: 0; font-weight: bold; font-size: 16px;"></p>
+  <button id="btnMostrarCotacoes" style="
+  width: 100%;
+  margin-top: 12px;
+  padding: 6px 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+">📊 Ver Cotações</button>
+
+<div id="listaCotacoes" style="
+  display: none;
+  margin-top: 10px;
+  background-color: #2a2a3d;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  max-height: 200px;
+  overflow-y: auto;
+"></div>
+
 </div>
     <h2>Horário Atual (GMT-3 - São Paulo):</h2>
     <div id="clock">--:--</div>
@@ -635,6 +690,40 @@ document.addEventListener('click', function(event) {
   
   if (popup.style.display === 'block' && !popup.contains(event.target) && event.target !== botao) {
     popup.style.display = 'none';
+  }
+});
+</script>
+<script>
+  //* Script para opção 'Ver Cotações'
+  document.getElementById('btnMostrarCotacoes').addEventListener('click', async () => {
+  const lista = document.getElementById('listaCotacoes');
+  const btn = document.getElementById('btnMostrarCotacoes');
+
+  // Alternar visibilidade
+  if (lista.style.display === 'none') {
+    if (cotacoes.length === 0) {
+      try {
+        const res = await fetch('https://sheet.best/api/sheets/SEU_ID_DA_PLANILHA');
+        cotacoes = await res.json();
+      } catch (err) {
+        lista.innerHTML = 'Erro ao carregar cotações.';
+        lista.style.display = 'block';
+        return;
+      }
+    }
+
+    // Montar HTML da cotação
+    lista.innerHTML = cotacoes.map(item => {
+      return `<div style="margin-bottom: 4px;">
+        <strong>${item.Item}</strong>: ${item.WCoin} WCoin
+      </div>`;
+    }).join('');
+
+    lista.style.display = 'block';
+    btn.textContent = '🔽 Ocultar Cotações';
+  } else {
+    lista.style.display = 'none';
+    btn.textContent = '📊 Ver Cotações';
   }
 });
 </script>
