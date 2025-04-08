@@ -162,7 +162,7 @@
 </head>
 <body>
 <!-- Botão flutuante com ícone -->
-<button id="abrirConversor" style="
+<button id="abrirConversor" title="Cotação de Itens" style="
   position: fixed;
   bottom: 80px; /* Ajuste para ficar acima do botão de voltar ao topo */
   right: 20px;
@@ -235,6 +235,18 @@
   max-height: 200px;
   overflow-y: auto;
 "></div>
+<button id="btnAtualizarCotacoes" style="
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+">🔄 Atualizar Agora</button>
+
+</div>
 
 </div>
     <h2>Horário Atual (GMT-3 - São Paulo):</h2>
@@ -645,86 +657,92 @@ function updateHighlight(isManual = false) {
 });
 </script>
 	
+<!-- Script principal -->
 <script>
 let cotacoes = [];
 
-document.getElementById('abrirConversor').addEventListener('click', async function () {
-  const popup = document.getElementById('popupConversor');
-  popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
-
-  // Buscar as cotações apenas uma vez
-  if (cotacoes.length === 0) {
-    try {
-      const res = await fetch('https://api.sheetbest.com/sheets/ea76938e-e0df-4868-bd3c-104a52f441eb');
-      cotacoes = await res.json();
-    } catch (err) {
-      document.getElementById('resultadoConversao').textContent = 'Erro ao buscar cotações.';
-      console.error(err);
-    }
-  }
-
-  atualizarConversao();
-});
-
-document.getElementById('itemSelect').addEventListener('change', atualizarConversao);
-document.getElementById('itemQtd').addEventListener('input', atualizarConversao);
-
-function atualizarConversao() {
-  const itemSelecionado = document.getElementById('itemSelect').value;
-  const quantidade = parseInt(document.getElementById('itemQtd').value, 10) || 1;
-  const resultado = document.getElementById('resultadoConversao');
-
-  const item = cotacoes.find(row => row.Item.toLowerCase() === itemSelecionado.toLowerCase());
-
-  if (item) {
-    const total = parseFloat(item.WCoin) * quantidade;
-    resultado.textContent = `Total: ${total} WCoin (${quantidade}x ${itemSelecionado})`;
-  } else {
-    resultado.textContent = 'Item não encontrado.';
+async function carregarCotacoes() {
+  try {
+    const res = await fetch('https://api.sheetbest.com/sheets/ea76938e-e0df-4868-bd3c-104a52f441eb');
+    cotacoes = await res.json();
+    console.log('Cotações atualizadas:', cotacoes);
+    atualizarConversao();
+  } catch (err) {
+    console.error('Erro ao carregar cotações:', err);
   }
 }
-// Fecha o popup ao clicar fora dele
-document.addEventListener('click', function(event) {
+
+function atualizarConversao() {
+  const item = document.getElementById('itemSelect').value;
+  const qtd = parseInt(document.getElementById('itemQtd').value);
+  const resultado = document.getElementById('resultadoConversao');
+
+  const cotacao = cotacoes.find(c => c.Item.trim().toLowerCase() === item.toLowerCase());
+  if (cotacao) {
+    const valor = parseFloat(cotacao.WCoin);
+    resultado.textContent = `💰 ${qtd * valor} WCoin`;
+  } else {
+    resultado.textContent = '❌ Cotação não encontrada.';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  carregarCotacoes();
+  setInterval(carregarCotacoes, 300000); // Atualiza a cada 5 minutos
+
   const popup = document.getElementById('popupConversor');
   const botao = document.getElementById('abrirConversor');
-  
-  if (popup.style.display === 'block' && !popup.contains(event.target) && event.target !== botao) {
-    popup.style.display = 'none';
-  }
-});
-</script>
-<script>
-  //* Script para opção 'Ver Cotações'
-  document.getElementById('btnMostrarCotacoes').addEventListener('click', async () => {
-  const lista = document.getElementById('listaCotacoes');
-  const btn = document.getElementById('btnMostrarCotacoes');
 
-  // Alternar visibilidade
-  if (lista.style.display === 'none') {
-    if (cotacoes.length === 0) {
-      try {
-        const res = await fetch('https://sheet.best/api/sheets/SEU_ID_DA_PLANILHA');
-        cotacoes = await res.json();
-      } catch (err) {
-        lista.innerHTML = 'Erro ao carregar cotações.';
-        lista.style.display = 'block';
-        return;
-      }
+  botao.addEventListener('click', () => {
+    if (popup.style.display === 'none' || popup.style.display === '') {
+      popup.style.display = 'block';
+      popup.style.opacity = '0';
+      setTimeout(() => { popup.style.opacity = '1'; }, 10);
     }
+  });
 
-    // Montar HTML da cotação
-    lista.innerHTML = cotacoes.map(item => {
-      return `<div style="margin-bottom: 4px;">
-        <strong>${item.Item}</strong>: ${item.WCoin} WCoin
-      </div>`;
-    }).join('');
+  // Fecha popup ao clicar fora
+  document.addEventListener('click', function(event) {
+    if (popup.style.display === 'block' && !popup.contains(event.target) && event.target !== botao) {
+      popup.style.opacity = '0';
+      setTimeout(() => { popup.style.display = 'none'; }, 200);
+    }
+  });
+  
+  document.getElementById('btnAtualizarCotacoes').addEventListener('click', async () => {
+  await carregarCotacoes();
 
-    lista.style.display = 'block';
-    btn.textContent = '🔽 Ocultar Cotações';
-  } else {
-    lista.style.display = 'none';
-    btn.textContent = '📊 Ver Cotações';
+  // Se o painel de cotações estiver aberto, atualiza o conteúdo visível também
+  const lista = document.getElementById('listaCotacoes');
+  if (lista.style.display === 'block') {
+    lista.innerHTML = cotacoes.map(item => `
+      <div style="margin-bottom: 4px;"><strong>${item.Item}</strong>: ${item.WCoin} WCoin</div>
+    `).join('');
   }
+
+  alert('✅ Cotações atualizadas com sucesso!');
+});
+
+  // Atualização automática ao mudar item ou quantidade
+  document.getElementById('itemSelect').addEventListener('change', atualizarConversao);
+  document.getElementById('itemQtd').addEventListener('input', atualizarConversao);
+
+  // Mostrar/ocultar cotações
+  document.getElementById('btnMostrarCotacoes').addEventListener('click', () => {
+    const lista = document.getElementById('listaCotacoes');
+    const btn = document.getElementById('btnMostrarCotacoes');
+
+    if (lista.style.display === 'none') {
+      lista.innerHTML = cotacoes.map(item => `
+        <div style="margin-bottom: 4px;"><strong>${item.Item}</strong>: ${item.WCoin} WCoin</div>
+      `).join('');
+      lista.style.display = 'block';
+      btn.textContent = '🔽 Ocultar Cotações';
+    } else {
+      lista.style.display = 'none';
+      btn.textContent = '📊 Ver Cotações';
+    }
+  });
 });
 </script>
 </body>
