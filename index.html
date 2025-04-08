@@ -201,8 +201,23 @@
 ">
   <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 18px;">🔄 Conversor de Itens</h3>
 
-  <label for="itemSelect" style="font-weight: bold;">Item:</label><br/>
-  <select id="itemSelect" style="width: 100%; padding: 8px; margin: 8px 0 12px; border-radius: 6px; border: none; outline: none;">
+<div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 10px;">
+  <label for="itemSelect" style="
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 2px;
+  ">Item:</label>
+
+  <select id="itemSelect" style="
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 150px;
+    text-align: center;
+    margin-bottom: 20px;
+  ">
+    
     <option value="Bless">Bless</option>
     <option value="Soul">Soul</option>
     <option value="Life">Life</option>
@@ -210,9 +225,22 @@
     <option value="Harmony">Harmony</option>
   </select>
 
-  <label for="itemQtd" style="font-weight: bold;">Quantidade:</label><br/>
-  <input type="number" id="itemQtd" value="1" min="1" style="width: 100%; padding: 8px; margin: 8px 0 12px; border-radius: 6px; border: none; outline: none;" />
-
+<div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 10px;">
+  <label for="itemQtd" style="
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 2px;  /* Bem próximo do input */
+  ">Quantidade:</label>
+  
+  <input type="number" id="itemQtd"  value="1" min="1" style="
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 150px;
+    text-align: center;
+  ">
+</div>
   <p id="resultadoConversao" style="margin: 0; font-weight: bold; font-size: 16px;"></p>
   <button id="btnMostrarCotacoes" style="
   width: 100%;
@@ -693,13 +721,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const popup = document.getElementById('popupConversor');
   const botao = document.getElementById('abrirConversor');
 
-  botao.addEventListener('click', () => {
-    if (popup.style.display === 'none' || popup.style.display === '') {
-      popup.style.display = 'block';
-      popup.style.opacity = '0';
-      setTimeout(() => { popup.style.opacity = '1'; }, 10);
-    }
-  });
+botao.addEventListener('click', () => {
+  const isOpen = popup.style.display === 'block';
+  if (isOpen) {
+    popup.style.opacity = '0';
+    setTimeout(() => { popup.style.display = 'none'; }, 200);
+  } else {
+    popup.style.display = 'block';
+    popup.style.opacity = '0';
+    setTimeout(() => { popup.style.opacity = '1'; }, 10);
+  }
+});
 
   // Fecha popup ao clicar fora
   document.addEventListener('click', function(event) {
