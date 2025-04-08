@@ -7,6 +7,14 @@
     <link rel="icon" type="image/x-icon" href="favicon1.ico">
     <button id="btnTop" class="btn-top">↑</button>
     <style>
+    @media (max-width: 768px) {
+    .top-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
     .btn-top {
     position: fixed;
     bottom: 20px;
@@ -280,13 +288,16 @@
 </div>
 
 </div>
-    <h2>Horário Atual (GMT-3 - São Paulo):</h2>
+  <div class="top-content">
+      <h2>Horário Atual (GMT-3 - São Paulo):</h2>
     <div id="clock">--:--</div>
     <button id="resetButton" onclick="resetToCurrentTime()">Usar horário atual</button>
 
     <h2>Selecione um horário:</h2>
     <input type="time" id="timeInput" onchange="updateHighlight(true)">
 <div id="eventCount" style="margin-bottom: 10px; font-weight: bold;"></div>
+
+</div>
 
     <table id="eventTable">
         <tr>
