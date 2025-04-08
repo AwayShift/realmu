@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela de Eventos</title>
     <link rel="icon" type="image/x-icon" href="favicon1.ico">
     <button id="btnTop" class="btn-top">↑</button>
     <style>
-    @media (max-width: 768px) {
-    .top-content {
-    text-align: center;
+@media (max-width: 560px) {
+  .top-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+  }
+
+  .top-content img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .top-content h1, .top-content p {
+    width: 100%;
   }
 }
     .btn-top {
