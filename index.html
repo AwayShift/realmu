@@ -7,6 +7,60 @@
     <link rel="icon" type="image/x-icon" href="favicon1.ico">
     <button id="btnTop" class="btn-top">↑</button>
     <style>
+  
+      /* Botão com ícone de presente 🎁 */
+    .btn-info {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-info:hover {
+      background-color: #218838;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 50%;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+    
+    /* Fim do Botão */
     .btn-top {
     position: fixed;
     bottom: 20px;
@@ -578,6 +632,239 @@
             <td>x15 Soldiers, x1 White Wizard / channel Lorencia, Noria, Devias Mapa</td>
         </tr>		
     </table>
+    
+    <h1>Tabela de Boss</h1>
+<table id= "eventTableBoss">
+          <tr>
+            <th>Evento</th>
+            <th>Segunda</th>
+            <th>Terça</th>
+            <th>Quarta</th>
+            <th>Quinta</th>
+            <th>Sexta</th>
+            <th>Sábado</th>
+            <th>Domingo</th>
+            <th>Informação</th>
+            
+            
+        </tr>
+        <tr>
+            <td> <strong>Erohim</strong>        <button class="btn-info" onclick="openModal('Erohim', '[50] Goblin Points<br>[3] Mastery Box (Greater)<br>[15] Jewel of Creation<br>[15] Lapidary Stone<br>[1] Rage Earring (L/R)<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (I)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">04:00</td>
+            <td class="bold">12:00</td>
+            <td class="bold">14:00</td>
+            <td class="bold">21:00</td>
+            <td class="bold">18:00</td>
+            <td class="bold">09:00</td>
+            <td class="bold">20:00</td>
+            <td class="bold">Loren Deep Event </td>
+        </tr>
+        
+                <tr>
+            <td> <strong>Cursed Kundun</strong>        <button class="btn-info" onclick="openModal('Cursed Kundun', '[50] Goblin Points<br>[3] Mastery Box (Greater)<br>[15] Jewel of Bless<br>[15] Jewel of Soul<br>[4] Ancient Item<br>[1] Rage Earring (L/R)<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (I)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">22:00</td>
+            <td class="bold">--</td>
+            <td class="bold">05:00</td>
+            <td class="bold">--</td>
+            <td class="bold">15:00</td>
+            <td class="bold">--</td>
+            <td class="bold">Kalima 7 Respawn: 12 ~ 24H </td>
+        </tr>
+                        <tr>
+            <td> <strong>Balgass</strong>        <button class="btn-info" onclick="openModal('Balgass', '<strong><br>Balgass:</strong><br>[1000] Goblin Points<br>[100] Jewel of Bless<br>[100] Jewel of Soul<br>[100] Guardian Enhanced Stone<br>[5] Talisman of Chaos Assembly<br>[30] Ability Crystal [B]<br>[8] Boss Emblem (I)<br>[8] Boss Emblem (II)<br><br><strong>Dark Elf:</strong><br>[10] Goblin Points<br>[10] Jewel of Creation<br>[2] Ancient Item<br>[1] Boss Emblem (I) (50%)<br>[1] Boss Emblem (II) (50%)<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">2 Spawns / Week Crywolf Event </td>
+        </tr>
+            <td> <strong>Medusa</strong>        <button class="btn-info" onclick="openModal('Medusa', '[50] Goblin Points<br>[3] Mastery Box (Greater)<br>[15] Jewel of Bless<br>[15] Jewel of Soul<br>[4] Excellent Weapons<br>[4] Ancient Item<br>[1] Rage Earring (L/R)<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (I)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">13:00</td>
+            <td class="bold">09:00</td>
+            <td class="bold">05:00</td>
+            <td class="bold">14:00</td>
+            <td class="bold">11:00</td>
+            <td class="bold">08:00
+20:00</td>
+            <td class="bold">10:00
+22:00</td>
+            <td class="bold">+ Random Spawn Time included
+Swamp of Calmness</td><tr>
+<td> <strong>Deep Dungeon Gorgon</strong>        <button class="btn-info" onclick="openModal('Deep Dungeon Gorgon', '[2000] Goblin Points<br>[3] Mysterious Stone<br>[2] Pentagram Lv. 300<br>[20] Jewel of Creation<br>[20] Lapidary Stone<br>[5] Uriels Feather<br>[2] Ability Crystal [B]<br>[3] Boss Emblem (III)')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">05:00</td>
+            <td class="bold">16:00</td>
+            <td class="bold">03:00</td>
+            <td class="bold">11:00</td>
+            <td class="bold">23:00</td>
+            <td class="bold">10:00</td>
+            <td class="bold">23:00</td>
+            <td class="bold">Deep Dungeon 5
+Diário
++ Random Spawns</tr>
+<td> <strong>Metal Balrog</strong>        <button class="btn-info" onclick="openModal('Metal Balrog', '[2000] Goblin Points<br>[3] Mysterious Stone<br>[2] Pentagram Lv. 300<br>[20] Jewel of Creation<br>[20] Lapidary Stone<br>[5] Uriels Feather<br>[2] Ability Crystal [B]<br>[3] Boss Emblem (III)')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">05:00</td>
+            <td class="bold">16:00</td>
+            <td class="bold">03:00</td>
+            <td class="bold">11:00</td>
+            <td class="bold">23:00</td>
+            <td class="bold">10:00</td>
+            <td class="bold">23:00</td>
+            <td class="bold">PvP Square
+4 Spawns / Week</tr>
+<td> <strong>Cursed Hydra</strong>        <button class="btn-info" onclick="openModal('Cursed Hydra', '[100] Lapidary Stone<br>[100] Jewel of Bless<br>[100] Jewel of Soul<br>[100] Jewel of Creation<br>[20] Ability Crystal [B]<br>[1] Jewel of Excess (low chance)<br>[1] Jewel of Luck (low chance)<br>[20] Boss Emblem (III)<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">03:00</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">21:00</td>
+            <td class="bold">08:00</td>
+            <td class="bold">20:00</td>
+            <td class="bold">PvP Square
+4 Spawns / Week</tr>
+<td> <strong>Cursed Phoenix</strong>        <button class="btn-info" onclick="openModal('Cursed Phoenix', '[10] Mysterious Stone<br>[2] Excellent-Socket Necklace (1~3 Opt/Skt)<br>[20] Ability Crystal [B]<br>[1] Jewel of Excess (low chance)<br>[1] Jewel of Luck (low chance)<br>[20] Boss Emblem (III)<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">22:00</td>
+            <td class="bold">--</td>
+            <td class="bold">09:00</td>
+            <td class="bold">09:00</td>
+            <td class="bold">21:00</td>
+            <td class="bold">PvP Square
+4 Spawns / Week</tr>
+                                <tr>
+            <td> <strong>Nightmare</strong>        <button class="btn-info" onclick="openModal('Nightmare', '<br><strong>Nightmare:</strong><br>[50] Goblin Points<br>[5] Elemental Talisman of Chaos<br>[15] Jewel of Creation<br>[15] Lapidary Stone<br>[1] Rage Earring (L/R)<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (II)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly<br><br><strong>Maya Hands:</strong><br>[2] Elemental Talisman of Luck<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">Kanturu Remain
+Respawn: 36H</tr>
+<td> <strong>Selupan</strong>        <button class="btn-info" onclick="openModal('Selupan', '[50] Goblin Points<br>[3] Mastery Box (Greater)<br>[4] Socket Sets 380<br>[4] Socket Weapons 380<br>[4] Ancient Item<br>[3] Excellent Weapon<br>[15] Jewel of Creation<br>[15] Lapidary Stone<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (I)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">Raklion
+Respawn: 24 ~ 32H</tr>
+<td> <strong>Core Magriffy</strong>        <button class="btn-info" onclick="openModal('Core Magriffy', '[100] Goblin Points<br>[3] Mastery Box (Greater)<br>[15] Jewel of Bless<br>[15] Lapidary Stone<br>[1] Pentagram Lv. 300<br>[1] Mount (Evolved)<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (II)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly<br>[1] Elemental Talisman of Chaos<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">Acheron - Nars
+Respawn: 24 ~ 32H</tr>
+<td> <strong>Lord of Ferea</strong>        <button class="btn-info" onclick="openModal('Lord of Ferea', '[150] Goblin Points<br>[3] Mastery Box (Greater)<br>[1] Pentagram Lv. 300<br>[15] Jewel of Bless<br>[15] Jewel of Soul<br>[4] Sealed Bloodangel<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (II)<br><br><strong>Bonus Drop (50%):</strong><br>[1] (Hero) Bloodangel Spirit<br>[1] Talisman of Chaos Assembly<br>[1] Elemental Talisman of Chaos<br>')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">Ferea
+Respawn: 24 ~ 32H</tr>
+<td> <strong>Nix</strong>        <button class="btn-info" onclick="openModal('Nix', '[2000] Goblin Points<br>[3] Seed Sphere (Step: 2~5)<br>[20] Jewel of Bless<br>[20] Jewel of Soul<br>[2] Pentagram Lv. 300<br>[3] Mysterious Stone<br>[10] Golden Sentence<br>[2] Ability Crystal [B]<br>[1] Boss Emblem (II)')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">Nixies Lake
+Respawn: 48 ~ 60H</tr>
+<td> <strong>God of Darkness</strong>        <button class="btn-info" onclick="openModal('God of Darkness', '[2000] Goblin Points<br>[3] Mysterious Stone<br>[2] Pentagram Lv. 300<br>[20] Jewel of Creation<br>[20] Lapidary Stone<br>[5] Uriels Feather<br>[2] Ability Crystal [B]<br>[3] Boss Emblem (III)')">
+          🎁
+        </button> </td>
+            
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">--</td>
+            <td class="bold">Swamp of Darkness
+Respawn: 48 ~ 60H</tr>
+
+</table>
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalContent"></p>
+  </div>
+</div>
+<script>
+  function openModal(eventName, rewardInfo) {
+    document.getElementById('modalTitle').innerText = eventName;
+    document.getElementById('modalContent').innerHTML = `<strong>Recompensas:</strong><br>${rewardInfo}`;
+    document.getElementById('infoModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('infoModal').style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('infoModal');
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  }
+</script>
  <script>
         const weekMap = {
             "domingo": 0,
