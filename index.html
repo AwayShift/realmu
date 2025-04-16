@@ -7,7 +7,22 @@
     <link rel="icon" type="image/x-icon" href="favicon1.ico">
     <button id="btnTop" class="btn-top">↑</button>
     <style>
-  
+      .toggle-btn {
+      margin: 5px;
+      padding: 10px 15px;
+      background-color: #343a40;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: #23272b;
+    }
+  /* Tabela de Boss */
       /* Botão com ícone de presente 🎁 */
     .btn-info {
       display: inline-flex;
@@ -25,7 +40,7 @@
     .btn-info:hover {
       background-color: #218838;
     }
-
+/* Fim da Tabela */
     .modal {
       display: none;
       position: fixed;
@@ -341,7 +356,8 @@
     <h2>Selecione um horário:</h2>
     <input type="time" id="timeInput" onchange="updateHighlight(true)">
 <div id="eventCount" style="margin-bottom: 10px; font-weight: bold;"></div>
-
+  <!-- Botão para ocultar/exibir -->
+<button class="toggle-btn" onclick="toggleTable()">Mostrar/Ocultar Tabela</button>
     <table id="eventTable">
         <tr>
             <th>Evento</th>
@@ -633,6 +649,15 @@
         </tr>		
     </table>
     
+    <!-- Modal -->
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalContent"></p>
+  </div>
+</div>
+
     <h1>Tabela de Boss</h1>
 <table id= "eventTableBoss">
           <tr>
@@ -862,6 +887,15 @@ Respawn: 48 ~ 60H</tr>
     const modal = document.getElementById('infoModal');
     if (event.target === modal) {
       modal.style.display = 'none';
+    }
+  }
+  
+  function toggleTable() {
+    const tableDiv = document.getElementById('eventTable');
+    if (tableDiv.style.display === 'none') {
+      tableDiv.style.display = 'block';
+    } else {
+      tableDiv.style.display = 'none';
     }
   }
 </script>
