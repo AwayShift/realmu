@@ -663,7 +663,7 @@
           <tr>
             <th>Evento</th>
             <th>Segunda</th>
-            <th>Terça</th>
+            <th>Terça-Feira</th>
             <th>Quarta</th>
             <th>Quinta</th>
             <th>Sexta</th>
@@ -1101,5 +1101,35 @@ botao.addEventListener('click', () => {
   });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dayIndex = new Date().getDay(); // 0 = Domingo ... 6 = Sábado
+  const weekDays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  const today = weekDays[dayIndex];
+
+  const bossTable = document.querySelector("#eventTableBoss");
+  if (!bossTable) return;
+
+  const headers = bossTable.querySelectorAll("#eventTableBoss th");
+  let targetColumnIndex = -1;
+
+  headers.forEach((th, index) => {
+    if (th.textContent.trim().toLowerCase().includes(today.toLowerCase())) {
+      targetColumnIndex = index;
+    }
+  });
+
+  if (targetColumnIndex === -1) return;
+
+  // Destacar todas as células dessa coluna (exceto cabeçalho)
+  bossTable.querySelectorAll("tbody tr").forEach((row) => {
+    const cells = row.querySelectorAll("td");
+    if (cells[targetColumnIndex]) {
+      cells[targetColumnIndex].classList.add("highlight");
+    }
+  });
+});
+</script>
+
 </body>
 </html>
